@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adivinhe o Número</title>
+</head>
+<body>
+
+<script>
+  function jogarAdivinhacao() {
+    alert("Adivinhe o Número.!");
+    
+    const numeroSecreto = Math.floor(Math.random() * 100) + 1;
+    const limiteTentativas = 10;
+    let tentativasRestantes = limiteTentativas;
+    let acertou = false;
+
+    while (tentativasRestantes > 0) {
+      let palpite = prompt(`Digite um número entre 1 e 100.\nNúmeros de tentativas: ${tentativasRestantes}`);
+      
+      if (palpite === null) {
+        alert("Jogo encerrado.");
+        return;
+      }
+
+      palpite = parseInt(palpite);
+
+      if (isNaN(palpite) || palpite < 1 || palpite > 100) {
+        alert("Por favor, informe um número entre 1 e 100.");
+        continue; 
+      }
+
+      tentativasRestantes--;
+
+      if (palpite === numeroSecreto) {
+        alert(`Parabéns! Você acertou o número ${numeroSecreto} com ${limiteTentativas - tentativasRestantes} tentativa(s)!`);
+        acertou = true;
+        break;
+      } else if (palpite < numeroSecreto) {
+        alert("O número secreto é MAIOR.");
+      } else {
+        alert("O número secreto é MENOR.");
+      }
+    }
+
+    if (!acertou) {
+      alert(`Você perdeu! O número secreto era ${numeroSecreto}.`);
+    }
+
+    const jogarNovamente = prompt("Deseja jogar novamente? (sim/não)").toLowerCase();
+    if (jogarNovamente === "sim") {
+      jogarAdivinhacao(); 
+    } else {
+      alert("Obrigado por jogar!");
+    }
+  }
+
+  jogarAdivinhacao();
+</script>
+
+</body>
+</html>
