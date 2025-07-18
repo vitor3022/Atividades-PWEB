@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Jogo da Forca</title>
+</head>
+<body>
+
+<script>
+function jogarForca() {
+  const palavras = [
+    "banana", "cachorro", "Cavalo", "teclado", "internet",
+    "forca", "programador", "futebol", "carro", "Violão",
+    "janela", "abacaxi", "praia", "piscina", "livro",
+    "escola", "caneta", "cadeira", "papel", "bicicleta"
+  ];
+
+  const palavra = palavras[Math.floor(Math.random() * palavras.length)];
+  let letrasCorretas = Array(palavra.length).fill("_");
+  let letrasUsadas = [];
+  let erros = 0;
+  const maxErros = 6;
+  let venceu = false;
+
+  alert("Jogo da Forca!");
+
+  while (erros < maxErros && letrasCorretas.includes("_")) {
+    let estado = letrasCorretas.join(" ");
+    let letra = prompt(
+      `Palavra: ${estado}\nTentativas: ${erros}/${maxErros}\nLetras usadas: ${letrasUsadas.join(", ")}\n\nDigite uma letra:`);
+
+    if (!letra) {
+      alert("Jogo cancelado.");
+      return;
+    }
+
+    letra = letra.toLowerCase();
+
+    if (letra.length !== 1 || !letra.match(/[a-z]/)) {
+      alert("Digite apenas UMA letra .");
+      continue;
+    }
+
+    if (letrasUsadas.includes(letra)) {
+      alert("Você já tentou essa letra!");
+      continue;
+    }
+
+    letrasUsadas.push(letra);
+
+    if (palavra.includes(letra)) {
+      for (let i = 0; i < palavra.length; i++) {
+        if (palavra[i] === letra) {
+          letrasCorretas[i] = letra;
+        }
+      }
+    } else {
+      erros++;
+      alert(`Letra "${letra}" não está na palavra!`);
+    }
+  }
+
+  if (!letrasCorretas.includes("_")) {
+    alert(`Parabéns! Você adivinhou: "${palavra.toUpperCase()}"`);
+    venceu = true;
+  } else {
+    alert(`Você perdeu! A palavra era: "${palavra.toUpperCase()}"`);
+  }
+
+  const jogarNovamente = prompt("Deseja jogar novamente? (sim/não)").toLowerCase();
+  if (jogarNovamente === "sim") {
+    jogarForca();
+  } else {
+    alert("Obrigado por jogar!");
+  }
+}
+
+jogarForca();
+</script>
+
+</body>
+</html>
